@@ -1,14 +1,19 @@
-import http from 'http';
+import http, { IncomingMessage, ServerResponse } from 'http';
+import { EventEmitter } from 'events';
+import { Router } from './../routes/routes';
+import { HTTP_RESPONSE_CODES } from 'src/types/generalTypes';
 
 export default class CrudApiServer {
-  server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>;
+  server;
+  emitter = new EventEmitter();
 
   constructor() {
     this.server = this.#startServer();
   }
 
   #startServer = () =>
-    http.createServer((req, _) => {
+    http.createServer((req: IncomingMessage, res) => {
+      const { url, method } = req;
       let data = '';
 
       req.on('data', (chunk) => {
@@ -16,13 +21,38 @@ export default class CrudApiServer {
       });
 
       req.on('end', () => {
-        if (data) {
-          console.log(data);
+        console.log(data);
+        const emitted = this.emitter.emit(this.#getRequestDetails(url, method), req, res);
+
+        if (!emitted) {
+          res.writeHead(HTTP_RESPONSE_CODES.NOT_FOUND, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(`Endpoint ${url} does not found`));
         }
       });
     });
 
-  listen(port = '3000', callback: () => void) {
+  #getRequestDetails = (pathname = '', method = '') => `${pathname}#${method}`;
+
+  listen = (port = '3000', callback: () => void) => {
     this.server.listen(port, callback);
-  }
+  };
+
+  setRoutes = (routes: Router) => {
+    Object.keys(routes).forEach((route) => {
+      const endpoint = routes[route];
+
+      if (endpoint) {
+        Object.keys(endpoint).forEach((method) => {
+          this.emitter.on(
+            this.#getRequestDetails(route, method),
+            (req: IncomingMessage, res: ServerResponse) => {
+              const handler = endpoint[method];
+
+              handler?.(req, res);
+            },
+          );
+        });
+      }
+    });
+  };
 }
