@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import users from '../data/users';
 import { ERROR_MESSAGES, HTTP_RESPONSE_CODES } from '../types/generalTypes';
 import { onResponseSend, isValidUser, printError } from '../utils';
+import MESSAGE_SERVICE from '../services/message';
 
 const addUser = (req: IncomingMessage, res: ServerResponse, data: string) => {
   try {
@@ -14,11 +15,11 @@ const addUser = (req: IncomingMessage, res: ServerResponse, data: string) => {
       users.push(newUser);
       onResponseSend(res, HTTP_RESPONSE_CODES.CREATED, newUser);
     } else {
-      onResponseSend(res, HTTP_RESPONSE_CODES.BAD_REQUEST, `User payload data is not valid`);
+      onResponseSend(res, HTTP_RESPONSE_CODES.BAD_REQUEST, MESSAGE_SERVICE.invalidPayload);
     }
-  } catch (e) {
+  } catch {
     onResponseSend(res, HTTP_RESPONSE_CODES.ERROR, ERROR_MESSAGES.ERROR);
-    printError(`User payload data is not valid`);
+    printError(MESSAGE_SERVICE.invalidPayload);
   }
 };
 
