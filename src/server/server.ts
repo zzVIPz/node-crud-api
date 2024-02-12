@@ -22,7 +22,6 @@ export default class CrudApiServer {
       });
 
       req.on('end', () => {
-        console.log(data);
         const emitted = this.emitter.emit(this.#getRequestDetails(url, method), req, res, data);
 
         if (!emitted) {
@@ -60,4 +59,6 @@ export default class CrudApiServer {
       }
     });
   };
+
+  getServerInstance = () => this.server;
 }

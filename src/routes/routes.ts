@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { getAllUsers, getUserById, addUser, updateUser, deleteUser } from '../api';
 
-const USER_ROUTE = '/api/users';
+export const USER_ROUTE = '/api/users';
 export const USER_ID_ROUTE = '/api/users/:userId';
 
 export interface Router {
