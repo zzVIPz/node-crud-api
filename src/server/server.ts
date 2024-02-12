@@ -2,7 +2,7 @@ import http, { IncomingMessage, ServerResponse } from 'http';
 import { EventEmitter } from 'events';
 import { Router, USER_ID_ROUTE } from '../routes/routes';
 import { HTTP_RESPONSE_CODES } from '../types/generalTypes';
-import parseUrl from '../utils/parseUrl';
+import { parseUrl } from '../utils';
 
 export default class CrudApiServer {
   server;
@@ -13,7 +13,7 @@ export default class CrudApiServer {
   }
 
   #startServer = () =>
-    http.createServer((req: IncomingMessage, res) => {
+    http.createServer((req, res) => {
       const { url, method } = req;
       let data = '';
 
@@ -23,7 +23,7 @@ export default class CrudApiServer {
 
       req.on('end', () => {
         console.log(data);
-        const emitted = this.emitter.emit(this.#getRequestDetails(url, method), req, res);
+        const emitted = this.emitter.emit(this.#getRequestDetails(url, method), req, res, data);
 
         if (!emitted) {
           res.writeHead(HTTP_RESPONSE_CODES.NOT_FOUND, { 'Content-Type': 'application/json' });
@@ -50,10 +50,10 @@ export default class CrudApiServer {
         Object.keys(endpoint).forEach((method) => {
           this.emitter.on(
             this.#getRequestDetails(route, method),
-            (req: IncomingMessage, res: ServerResponse) => {
+            (req: IncomingMessage, res: ServerResponse, data: string) => {
               const handler = endpoint[method];
 
-              handler?.(req, res);
+              handler?.(req, res, data);
             },
           );
         });
