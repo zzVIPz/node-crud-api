@@ -1,5 +1,5 @@
 import http, { IncomingMessage, ServerResponse } from 'http';
-import { EventEmitter } from 'events';
+import EventEmitter from 'events';
 import { Router, USER_ID_ROUTE } from '../routes/routes';
 import { HTTP_RESPONSE_CODES } from '../types/generalTypes';
 import { parseUrl } from '../utils';
