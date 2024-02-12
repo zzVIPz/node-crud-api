@@ -19,6 +19,10 @@ PORT: 4000
 
 To start prod mode: `npm run start:prod`
 
+## Start load balancer mode
+
+To start prod mode: `npm run start:multi`
+
 ## Supported endpoints
 
 - GET api/users is used to get all persons
