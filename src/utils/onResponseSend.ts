@@ -9,3 +9,5 @@ export const onResponseSend = (
   res.writeHead(statusCode, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(data));
 };
+
+export default onResponseSend;

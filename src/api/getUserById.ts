@@ -1,9 +1,8 @@
 import { IncomingMessage, ServerResponse } from 'http';
+import { validate } from 'uuid';
 import users from '../data/users';
 import { HTTP_RESPONSE_CODES } from '../types/generalTypes';
-import { onResponseSend } from '../utils/onResponseSend';
-import parseUrl from '../utils/parseUrl';
-import { validate } from 'uuid';
+import { onResponseSend, parseUrl } from '../utils';
 
 const getUserById = (req: IncomingMessage, res: ServerResponse) => {
   const { userId = '' } = parseUrl(req.url);

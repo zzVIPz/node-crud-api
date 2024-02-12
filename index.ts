@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import CrudApiServer from './src/server/server';
-import { print, printError } from './src/utils/print';
+import { print, printError } from './src/utils';
 import routes from './src/routes/routes';
 
 const init = () => {
