@@ -1,21 +1,23 @@
 import 'dotenv/config';
 import CrudApiServer from './src/server/server';
-import { print, printError } from './src/utils';
+import { printError } from './src/utils';
 import routes from './src/routes/routes';
 
 const init = () => {
   try {
-    const PORT = process.env.PORT;
-    const crudApiServer = new CrudApiServer();
+    const crudApiServer = new CrudApiServer(
+      process.argv.includes('--withLoadBalancer'),
+      process.env.PORT,
+    );
 
     crudApiServer.setRoutes(routes);
-
-    crudApiServer.listen(PORT, () => print(`Server started on PORT ${PORT}`, 'green'));
   } catch (e) {
     printError(
       'Something went during starting server. Please reinstall dependencies and try again.',
     );
   }
+
+  return;
 };
 
 init();
