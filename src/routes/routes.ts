@@ -1,5 +1,8 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { getAllUsers } from '../api/index';
+import { getAllUsers, getUserById } from '../api/index';
+
+const USER_ROUTE = '/api/users';
+export const USER_ID_ROUTE = '/api/users/:userId';
 
 export interface Router {
   [route: string]: {
@@ -8,12 +11,12 @@ export interface Router {
 }
 
 const routes = {
-  '/api/users': {
+  [USER_ROUTE]: {
     GET: getAllUsers,
     POST: () => {},
   },
-  '/api/users/:userId': {
-    GET: () => {},
+  [USER_ID_ROUTE]: {
+    GET: getUserById,
     PUT: () => {},
     DELETE: () => {},
   },

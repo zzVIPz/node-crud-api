@@ -1,7 +1,8 @@
 import http, { IncomingMessage, ServerResponse } from 'http';
 import { EventEmitter } from 'events';
-import { Router } from '../routes/routes';
+import { Router, USER_ID_ROUTE } from '../routes/routes';
 import { HTTP_RESPONSE_CODES } from '../types/generalTypes';
+import parseUrl from '../utils/parseUrl';
 
 export default class CrudApiServer {
   server;
@@ -31,7 +32,11 @@ export default class CrudApiServer {
       });
     });
 
-  #getRequestDetails = (pathname = '', method = '') => `${pathname}#${method}`;
+  #getRequestDetails = (url = '', method = '') => {
+    const { isValidId } = parseUrl(url);
+
+    return `${isValidId ? USER_ID_ROUTE : url}#${method}`;
+  };
 
   listen = (port = '3000', callback: () => void) => {
     this.server.listen(port, callback);
