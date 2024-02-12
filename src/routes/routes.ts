@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { getAllUsers, getUserById, addUser } from '../api';
+import { getAllUsers, getUserById, addUser, updateUser } from '../api';
 
 const USER_ROUTE = '/api/users';
 export const USER_ID_ROUTE = '/api/users/:userId';
@@ -17,7 +17,7 @@ const routes = {
   },
   [USER_ID_ROUTE]: {
     GET: getUserById,
-    PUT: () => {},
+    PUT: updateUser,
     DELETE: () => {},
   },
 };
