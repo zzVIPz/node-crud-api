@@ -10,3 +10,10 @@ export const enum HTTP_RESPONSE_CODES {
   NOT_FOUND = 404,
   ERROR = 500,
 }
+
+export interface User {
+  id: string;
+  username: string;
+  age: string;
+  hobbies: string[];
+}

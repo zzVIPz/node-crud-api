@@ -1,4 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'http';
+import { getAllUsers } from '../api/index';
 
 export interface Router {
   [route: string]: {
@@ -8,7 +9,7 @@ export interface Router {
 
 const routes = {
   '/api/users': {
-    GET: () => {},
+    GET: getAllUsers,
     POST: () => {},
   },
   '/api/users/:userId': {

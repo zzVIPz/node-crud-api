@@ -1,7 +1,7 @@
 import http, { IncomingMessage, ServerResponse } from 'http';
 import { EventEmitter } from 'events';
-import { Router } from './../routes/routes';
-import { HTTP_RESPONSE_CODES } from 'src/types/generalTypes';
+import { Router } from '../routes/routes';
+import { HTTP_RESPONSE_CODES } from '../types/generalTypes';
 
 export default class CrudApiServer {
   server;

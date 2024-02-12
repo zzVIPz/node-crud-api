@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import CrudApiServer from './src/api/server';
+import CrudApiServer from './src/server/server';
 import { print, printError } from './src/utils/print';
 import routes from './src/routes/routes';
 
