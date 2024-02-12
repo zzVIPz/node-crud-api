@@ -19,36 +19,41 @@ PORT: 4000
 
 To start prod mode: `npm run start:prod`
 
-## Supported endpoints 
+## Supported endpoints
 
 - GET api/users is used to get all persons
 
 - POST api/users is used to create record about new user and store it in database
 
-    expected payload is 
-    ```
-    {
-        "username": "test-username",
-        "age": "test-age",
-        "hobbies": [
-            "test-hobby"
-        ]
-    }
-    ```
-    
+  expected payload is
+
+  ```
+  {
+      "username": "test-username",
+      "age": "test-age",
+      "hobbies": [
+          "test-hobby"
+      ]
+  }
+  ```
+
 - PUT api/users/{userId} is used to update existing user
 
-    expected payload is 
-    ```
-    {
-        "username": "test-username",
-        "age": "test-age",
-        "hobbies": [
-            "test-hobby"
-        ]
-    }
-    ```
+  expected payload is
+
+  ```
+  {
+      "username": "test-username",
+      "age": "test-age",
+      "hobbies": [
+          "test-hobby"
+      ]
+  }
+  ```
 
 - DELETE api/users/{userId} is used to delete existing user from database
 
+## Tests
 
+- step1 - start project: `npm run start:dev`
+- step 2 - run tests: `npm test`
